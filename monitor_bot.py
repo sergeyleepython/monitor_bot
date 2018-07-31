@@ -1,6 +1,6 @@
 from telegram.ext import Updater, CommandHandler
 
-from config import BOT_TOKEN, CHAT_ID, MONITORED_URL, SUBSTRING
+from config import BOT_TOKEN, REQUEST_KWARGS, CHAT_ID, MONITORED_URL, SUBSTRING
 
 
 def hello(bot, update):
@@ -8,7 +8,7 @@ def hello(bot, update):
         'Hello {}'.format(update.message.from_user.first_name))
 
 
-updater = Updater(BOT_TOKEN)
+updater = Updater(BOT_TOKEN, request_kwargs=REQUEST_KWARGS)
 
 updater.dispatcher.add_handler(CommandHandler('hello', hello))
 
