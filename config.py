@@ -2,7 +2,7 @@
 BOT_TOKEN = 'XXXXX'
 
 REQUEST_KWARGS={
-    'proxy_url': 'URL_OF_THE_PROXY_SERVER',
+    'proxy_url': 'socks5://000.000.00.000:443',
     # Optional, if you need authentication:
     'urllib3_proxy_kwargs': {
         'username': 'PROXY_USER',
