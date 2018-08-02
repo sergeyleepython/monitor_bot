@@ -1,12 +1,13 @@
 # telegram bot token
-BOT_TOKEN = 'XXXXX'
+BOT_TOKEN = 'XXXXXXXXXXXXXXX'
 
-REQUEST_KWARGS={
-    'proxy_url': 'socks5://000.000.00.000:443',
+# proxy settings for Telegram
+PROXY={
+    'proxy_url': 'socks5://000.000.000.000:443',
     # Optional, if you need authentication:
     'urllib3_proxy_kwargs': {
-        'username': 'PROXY_USER',
-        'password': 'PROXY_PASS',
+        'username': 'some_user',
+        'password': 'some_password',
     }
 }
 

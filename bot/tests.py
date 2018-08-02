@@ -26,12 +26,12 @@ class TestMonitorBot(unittest.TestCase):
         job = Mock()
         self.mon_bot._callback_monitor(bot, job)
         get.assert_called_with(self.MONITORED_URL)
-        send_warning.assert_called_with(bot)
+        send_warning.assert_called_with(bot, self.mon_bot.WRONG_RESPONSE_MESSAGE)
 
     def test_send_warning(self):
         bot = Mock()
         old_last_notified_time = self.mon_bot.last_notified_time
-        self.mon_bot._send_warning(bot)
+        self.mon_bot._send_warning(bot, self.mon_bot.WRONG_RESPONSE_MESSAGE)
         self.assertNotEqual(old_last_notified_time, self.mon_bot.last_notified_time)
 
 

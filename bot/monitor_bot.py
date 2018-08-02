@@ -2,8 +2,9 @@ import time
 
 from telegram.ext import Updater
 import requests
+from requests.exceptions import ConnectionError
 
-from config import BOT_TOKEN, REQUEST_KWARGS, CHAT_ID, MONITORED_URL, SUBSTRING
+from config import BOT_TOKEN, PROXY, CHAT_ID, MONITORED_URL, SUBSTRING
 
 
 class MonitorBot:
@@ -12,31 +13,39 @@ class MonitorBot:
     MONITORING_INTERVAL = 1
     MIN_NOTIFICATION_PERIOD = 60
 
-    def __init__(self, token, request_kwargs, chat_id, monitored_url, substring):
+    def __init__(self, token, proxy, chat_id, monitored_url, substring):
         self.token = token
-        self.request_kwargs = request_kwargs
+        self.proxy = proxy
         self.chat_id = chat_id
         self.monitored_url = monitored_url
         self.substring = substring
         self.last_notified_time = 0.0
-        self.WARNING_MESSAGE = '{} is broken {} not found.'.format(monitored_url, substring)
+        self.WRONG_RESPONSE_MESSAGE = '{} is broken {} not found.'.format(monitored_url, substring)
+        self.CONNECTION_ERROR_MESSAGE = '{} is not responding.'.format(monitored_url)
 
     def _callback_monitor(self, bot, job):
         """ Callback function. Makes requests and sends notifications. """
-        response = requests.get(self.monitored_url)
-        if response.text != self.substring:
+        warning_text = None
+        try:
+            response = requests.get(self.monitored_url)
+        except ConnectionError:
+            warning_text=self.CONNECTION_ERROR_MESSAGE
+        else:
+            if response.text != self.substring:
+                warning_text=self.WRONG_RESPONSE_MESSAGE
+        if warning_text:
             time_elapsed = time.time() - self.last_notified_time
             if time_elapsed > self.MIN_NOTIFICATION_PERIOD:
-                self._send_warning(bot)
+                self._send_warning(bot, warning_text)
 
-    def _send_warning(self, bot):
+    def _send_warning(self, bot, text):
         """ Send message to channel and update notification time. """
-        bot.send_message(chat_id=CHAT_ID, text=self.WARNING_MESSAGE)
+        bot.send_message(chat_id=CHAT_ID, text=text)
         self.last_notified_time = time.time()
 
     def start(self):
         """ Starts the bot. """
-        self.updater = Updater(self.token, request_kwargs=self.request_kwargs)
+        self.updater = Updater(self.token, request_kwargs=self.proxy)
         # Notify the channel that the monitoring has started.
         self.updater.bot.send_message(chat_id=self.chat_id, text=self.STARTING_MESSAGE)
 
@@ -49,5 +58,5 @@ class MonitorBot:
 
 
 if __name__ == '__main__':
-    mon_bot = MonitorBot(BOT_TOKEN, REQUEST_KWARGS, CHAT_ID, MONITORED_URL, SUBSTRING)
+    mon_bot = MonitorBot(BOT_TOKEN, PROXY, CHAT_ID, MONITORED_URL, SUBSTRING)
     mon_bot.start()
