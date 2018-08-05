@@ -1,0 +1,11 @@
+---
+# defaults file for fix.bot
+bot_token: your_token
+chat_id: your_chat_id
+monitored_url: http://your_url
+substring: your_substring
+
+# Specify proxy settings if Telegram is blocked in your country, otherwise leave empty.
+proxy_url: # for example, socks5://xxx.xxx.xxx.xxx:443
+proxy_username:
+proxy_password:

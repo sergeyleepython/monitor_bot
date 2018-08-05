@@ -1,0 +1,47 @@
+---
+# tasks file for fix.bot
+- name: Deadsnakes PPA to get Python 3.6
+  become: yes
+  apt_repository:
+    repo='ppa:deadsnakes/ppa'
+
+- name: make sure Python 3.6 installed
+  become: yes
+  apt: pkg=python3.6,python3-pip state=present
+
+- name: clean bot directory
+  file:
+    state: absent
+    path: "/home/{{ ansible_ssh_user }}/bot/"
+
+- name: copy bot directory
+  copy:
+    src: "{{ playbook_dir }}/bot/"
+    dest: "/home/{{ ansible_ssh_user }}/bot/"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+
+- name: install requirements.txt
+  pip:
+    executable: pip3
+    requirements: "/home/{{ ansible_ssh_user }}/bot/requirements.txt"
+
+- name: copy config template
+  template:
+    src: config.py.j2
+    dest: "/home/{{ ansible_ssh_user }}/bot/config.py"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+
+- name: clean systemd template
+  file:
+    path: /etc/systemd/system/bot.service
+    state: absent
+
+- name: copy systemd template
+  become: yes
+  template:
+    src: bot.service.j2
+    dest: /etc/systemd/system/bot.service
+  notify:
+    - restart bot service

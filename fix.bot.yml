@@ -1,0 +1,4 @@
+- hosts: fix1 # replace with your host
+  gather_facts: false
+  roles:
+     - role: fix.bot

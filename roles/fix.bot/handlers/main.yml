@@ -1,0 +1,11 @@
+---
+# handlers file for fix.bot
+- name: restart bot service
+  become: yes
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+    name: bot
+
+

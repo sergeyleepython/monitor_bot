@@ -1,0 +1,3 @@
+- hosts: test-kitchen
+  roles:
+     - role: fix.bot

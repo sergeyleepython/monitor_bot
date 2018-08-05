@@ -7,7 +7,7 @@ from monitor_bot import MonitorBot
 class TestMonitorBot(unittest.TestCase):
     def setUp(self):
         self.BOT_TOKEN = 'test'
-        self.REQUEST_KWARGS = {
+        self.PROXY = {
             'proxy_url': 'socks5://1.1.1.1:443',
             'urllib3_proxy_kwargs': {
                 'username': 'test',
@@ -17,7 +17,7 @@ class TestMonitorBot(unittest.TestCase):
         self.CHAT_ID = 'test'
         self.MONITORED_URL = 'http://test'
         self.SUBSTRING = 'test'
-        self.mon_bot = MonitorBot(self.BOT_TOKEN, self.REQUEST_KWARGS, self.CHAT_ID, self.MONITORED_URL, self.SUBSTRING)
+        self.mon_bot = MonitorBot(self.BOT_TOKEN, self.CHAT_ID, self.MONITORED_URL, self.SUBSTRING, proxy=self.PROXY)
 
     @patch('monitor_bot.MonitorBot._send_warning')
     @patch('monitor_bot.requests.get')

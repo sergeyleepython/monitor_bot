@@ -1,0 +1,21 @@
+# telegram bot token
+BOT_TOKEN = '{{ bot_token }}'
+
+# proxy settings for Telegram
+PROXY={
+    'proxy_url': '{{ proxy_url }}',
+    # Optional, if you need authentication:
+    'urllib3_proxy_kwargs': {
+        'username': '{{ proxy_username }}',
+        'password': '{{ proxy_password }}',
+    }
+}
+
+# id of a telegram chat to send notifications
+CHAT_ID = '{{ chat_id }}'
+
+# url of monitored resource
+MONITORED_URL = '{{ monitored_url }}'
+
+# substring to search in a response
+SUBSTRING = '{{ substring }}'
