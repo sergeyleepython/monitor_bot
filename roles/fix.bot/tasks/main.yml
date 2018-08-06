@@ -16,7 +16,7 @@
 
 - name: copy bot directory
   copy:
-    src: "{{ playbook_dir }}/bot/"
+    src: "{{ role_path }}/files/bot/"
     dest: "/home/{{ ansible_ssh_user }}/bot/"
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
