@@ -1,8 +1,8 @@
 Monitor Bot
 =========
-This bot monitors a website's state by sending a request to a specified url every 1 second and checking the presence of a specified substring in a response.
+This bot monitors a website's status by sending a request to a specified URL every 1 second and checking the presence of a specified substring in a response.
 
-If the substring is absent, the bot sends warning to a specified Telegram chat id, but not more that once a minute.
+If the substring is absent, the bot sends warning to a specified Telegram chat id, but not more than once a minute.
 
 ## INSTALATION
 There are two ways to install the bot. 
@@ -16,16 +16,19 @@ See more details about the role in [`roles/fix.bot/README.md`](roles/fix.bot/REA
 ## REQUIREMENTS
 Python 3.6
 
-Python dependencies are listed in `requirements.txt`.
+Base Python dependencies are listed in `requirements.txt`.
+For development you may need additional libraries from `dev_requiremets.txt`.
 
 ## DEPLOYMENT
+Bot code is located in `roles/fix.bot/files` folder.
+
 * add a `config.py` file with your variables to the bot folder. 
 For this, you can use an ansible template `roles/fix.bot/templates/config.py.j2`.
 
 * copy the `bot` directory to a host server and enter it.
 
 * install requirements.txt:
-> pip3 install -r requirements.txt
+> $ pip3 install -r requirements.txt
 
 ## LAUNCHING AS A DEAMON
 
@@ -34,10 +37,10 @@ For this, you can use an ansible template `roles/fix.bot/templates/bot.service.j
 
 Make the bot start automatically after OS is loaded:
 
-> systemctl enable bot
+> $ systemctl enable bot
 
 Run the bot:
-> systemctl start bot
+> $ systemctl start bot
 
 ## TESTING
-> python3 tests.py
+> $ python3 tests.py
