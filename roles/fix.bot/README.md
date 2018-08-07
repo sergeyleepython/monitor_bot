@@ -5,7 +5,8 @@ This role deploys bot to a specified host and runs it as a service.
 
 Requirements
 ------------
-* Python2 
+* Python2
+* Ansible
 * RubyGems (for testing)
 
 
@@ -43,6 +44,10 @@ Example Playbook
 
 Launching example
 ----------------
+Install Ansible:
+> $ $ sudo pip install ansible
+
+Run ansible-playbook fix.bot.yml:
 > $ ansible-playbook fix.bot.yml -b -K
 
 Testing
@@ -55,7 +60,7 @@ For testing we use: Test Kitchen, kitchen-vagrant, kitchen-ansible and testinfra
 > $ sudo gem install test-kitchen kitchen-vagrant kitchen-ansible
 
 Run testing:
-> $ roles/fix.bot
+> $ cd roles/fix.bot
 
 > $ kitchen test default-ubuntu
 
