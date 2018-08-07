@@ -24,7 +24,7 @@
 - name: install requirements.txt
   pip:
     executable: pip3
-    requirements: "/home/{{ ansible_ssh_user }}/bot/requirements.txt"
+    requirements: "/home/{{ ansible_ssh_user }}/bot/dev_requirements.txt"
 
 - name: copy config template
   template:
